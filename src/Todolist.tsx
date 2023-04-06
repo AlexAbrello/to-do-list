@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {FilterKeyType} from "./App";
+import {FullInput} from "./components/FullInput";
 
 export type TaskType = {
     id: number
@@ -11,6 +12,7 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (id: number) => void
+    addTask: (value: string) => void
     filterTask?: (filterKey: FilterKeyType) => void
 }
 
@@ -35,10 +37,7 @@ export function Todolist(props: PropsType) {
 
     return <div>
         <h3>{props.title}</h3>
-        <div>
-            <input/>
-            <button>+</button>
-        </div>
+        <FullInput addTask={props.addTask}/>
         <ul>
             {collanderFoo().map(el => {
                 return (
