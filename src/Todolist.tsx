@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {FilterKeyType} from "./App";
 import {FullInput} from "./components/FullInput";
+import {Input} from "./components/Input";
+import {InputButton} from "./components/InputButton";
 
 export type TaskType = {
     id: number
@@ -20,6 +22,12 @@ export function Todolist(props: PropsType) {
 
     let [filter, setFilter] = useState<string>('all')
 
+    let [title, setTitle] = useState('')
+
+    const sendTask = (title: string) => {
+        props.addTask(title)
+        setTitle('')
+    }
     const collanderFoo = () => {
         let filteredTask: TaskType[] = props.tasks
 
@@ -37,7 +45,9 @@ export function Todolist(props: PropsType) {
 
     return <div>
         <h3>{props.title}</h3>
-        <FullInput addTask={props.addTask}/>
+        {/*<FullInput addTask={props.addTask}/>*/}
+        <Input title={title} setTitle={setTitle}/>
+        <InputButton sendTask={sendTask} title={title}/>
         <ul>
             {collanderFoo().map(el => {
                 return (
@@ -55,3 +65,4 @@ export function Todolist(props: PropsType) {
         </div>
     </div>
 }
+

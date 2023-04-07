@@ -12,20 +12,6 @@ function App() {
         { id: 3, title: "ReactJS", isDone: false }
     ])
 
-    /*let [filter, setFilter] = useState<string>('all')
-
-    let filteredTask: TaskType[] = tasks
-
-    if (filter === 'active') {
-       filteredTask = tasks.filter(el => !el.isDone)
-    } if (filter === 'completed') {
-        filteredTask = tasks.filter(el => el.isDone)
-
-    }
-    const filterTask = (filterKey: FilterKeyType) => {
-        setFilter(filterKey)
-    }*/
-
     const removeTask = (id: number) => {
         setTasks(tasks.filter(el => el.id !== id))
     }

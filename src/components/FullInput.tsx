@@ -4,20 +4,22 @@ type FullInputType = {
   addTask: (value: string) => void
 }
 export const FullInput = (props: FullInputType) => {
-  const [title, setTitle] = useState<string>('')
+
+  const [title, setTitle] = useState('')
 
   const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.currentTarget.value)
   }
 
+  const addTask = () => {
+    props.addTask(title)
+    setTitle('')
+  }
+
   return (
       <div>
-        <input onChange={onChangeInputHandler}/>
-        <button onClick={() => {
-          props.addTask(title)
-          setTitle('')
-        }}>+
-        </button>
+        <input value={title} onChange={onChangeInputHandler}/>
+        <button onClick={addTask}>+</button>
       </div>
   )
 }
