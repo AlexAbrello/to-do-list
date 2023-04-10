@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
-import {FilterKeyType} from "./App";
-import {FullInput} from "./components/FullInput";
-import {Input} from "./components/Input";
-import {InputButton} from "./components/InputButton";
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {FilterValuesType} from './App';
+import Button from "./components/Button";
 
-export type TaskType = {
-    id: number
+type TaskType = {
+    id: string
     title: string
     isDone: boolean
 }
@@ -13,56 +11,57 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (id: number) => void
-    addTask: (value: string) => void
-    filterTask?: (filterKey: FilterKeyType) => void
+    removeTask: (taskId: string) => void
+    changeFilter: (value: FilterValuesType) => void
+    addTask: (title: string) => void
 }
 
 export function Todolist(props: PropsType) {
 
-    let [filter, setFilter] = useState<string>('all')
+    const [title, setTitle] = useState<string>('')
 
-    let [title, setTitle] = useState('')
+    const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
 
-    const sendTask = (title: string) => {
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        (e.key === 'Enter') && addTaskHandler()
+    }
+
+    const addTaskHandler = () => {
         props.addTask(title)
         setTitle('')
-    }
-    const collanderFoo = () => {
-        let filteredTask: TaskType[] = props.tasks
-
-        if (filter === 'active') {
-            filteredTask = props.tasks.filter(el => !el.isDone)
-        } if (filter === 'completed') {
-            filteredTask = props.tasks.filter(el => el.isDone)
-        }
-        return filteredTask
-    }
-
-    const filterTask = (filterKey: FilterKeyType) => {
-        setFilter(filterKey)
     }
 
     return <div>
         <h3>{props.title}</h3>
-        {/*<FullInput addTask={props.addTask}/>*/}
-        <Input title={title} setTitle={setTitle}/>
-        <InputButton sendTask={sendTask} title={title}/>
+        <div>
+            <input value={title}
+                   onChange={changeTitleHandler}
+                   onKeyDown={onKeyDownHandler}
+            />
+            <button onClick={addTaskHandler}>+</button>
+        </div>
         <ul>
-            {collanderFoo().map(el => {
-                return (
-                    <li key={el.id}>
-                        <button onClick={() => props.removeTask(el.id)}>X</button>
-                        <input type="checkbox" checked={el.isDone}/>
-                        <span>{el.title}</span></li>
-                )
-            })}
+            {
+                props.tasks.map(t => {
+                  const removeTaskHandler = () => {
+                    props.removeTask(t.id)
+                  }
+                  return (
+                      <li key={t.id}>
+                        <input type="checkbox" checked={t.isDone}/>
+                        <span>{t.title}</span>
+                        <button onClick={removeTaskHandler}>x</button>
+                      </li>
+                  )
+                })
+            }
         </ul>
         <div>
-            <button onClick={() => filterTask('all')}>All</button>
-            <button onClick={() => filterTask('active')}>Active</button>
-            <button onClick={() => filterTask('completed')}>Completed</button>
+            <Button name={'All'} callBack={() => props.changeFilter("all")}/>
+            <Button name={'Active'} callBack={() => { props.changeFilter("active") }}/>
+            <Button name={'Completed'} callBack={() => { props.changeFilter("completed") }}/>
         </div>
     </div>
 }
-
