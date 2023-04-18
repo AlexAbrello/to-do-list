@@ -20,6 +20,10 @@ function App() {
         setTasks([newTask, ...tasks])
     }
 
+    const changeInputCheck = (taskId: string, isDoneValue: boolean) => {
+        setTasks(tasks.map(el => el.id === taskId ? {...el, isDone: isDoneValue} : el))
+    }
+
     function removeTask(id: string) {
         let filteredTasks = tasks.filter(t => t.id !== id);
         setTasks(filteredTasks);
@@ -47,6 +51,7 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeInputCheck={changeInputCheck}
 
             />
         </div>
