@@ -2,6 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import Button from "./components/Button";
 import style from './components/Error.module.css'
+import {SuperCheckBox} from "./components/SuperCheckBox";
 
 type TaskType = {
   id: string
@@ -41,6 +42,10 @@ export function Todolist(props: PropsType) {
     }
   }
 
+  const onCheckboxHandler = (elId: string, newIsDone: boolean) => {
+    props.changeInputCheck(elId, newIsDone)
+  }
+
   return <div>
     <h3>{props.title}</h3>
     <div>
@@ -59,12 +64,11 @@ export function Todolist(props: PropsType) {
           const removeTaskHandler = () => {
             props.removeTask(t.id)
           }
-          const onChecboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeInputCheck(t.id, e.currentTarget.checked)
-          }
+
           return (
               <li key={t.id}>
-                <input type="checkbox" checked={t.isDone} onChange={onChecboxHandler}/>
+                {/*<input type="checkbox" checked={t.isDone} onChange={onChecboxHandler}/>*/}
+                <SuperCheckBox isDone={t.isDone} callBack={(newIsDone) => onCheckboxHandler(t.id, newIsDone)}/>
                 <span>{t.title}</span>
                 <button onClick={removeTaskHandler}>x</button>
               </li>
