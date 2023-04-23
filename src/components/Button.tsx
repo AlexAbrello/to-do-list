@@ -12,9 +12,7 @@ const Button = ({name, callBack}: ButtonType) => {
   }
 
   return (
-      <div>
-        <button onClick={onClickHandler}>{name}</button>
-      </div>
+      <button onClick={onClickHandler}>{name}</button>
   );
 };
 
