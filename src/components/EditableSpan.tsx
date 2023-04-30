@@ -1,25 +1,35 @@
 import React, {ChangeEvent, FC, useState} from 'react';
-import {Simulate} from "react-dom/test-utils";
-import change = Simulate.change;
 
 type EditableSpanType = {
   title: string
+  callBack: (title: string) => void
 }
 
-export const EditableSpan: FC<EditableSpanType> = ({title}) => {
+export const EditableSpan: FC<EditableSpanType> = ({title, callBack}) => {
 
+  const [spanTitle, setSpanTitle] = useState<string>(title)
   const [editMode, setEditMode] = useState<boolean>(false)
 
-  const changeEditMode = () => {
-    setEditMode(!editMode)
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSpanTitle(e.currentTarget.value)
+  }
+  const activateViewMode = () => {
+    callBack(spanTitle)
+    setEditMode(false)
+  }
+  const activateEditMode = () => {
+    setEditMode(true)
   }
 
   return (
       <>
         {
           editMode
-              ? <input value={title} onBlur={changeEditMode} autoFocus/>
-              : <span onDoubleClick={changeEditMode}>{title}</span>
+              ? <input value={spanTitle}
+                       onChange={onChangeHandler}
+                       onBlur={activateViewMode}
+                       autoFocus/>
+              : <span onDoubleClick={activateEditMode}>{title}</span>
         }
       </>
   );
