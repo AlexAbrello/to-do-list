@@ -13,13 +13,6 @@ export const AddItemForm: FC<AddItemType> = ({addItem}) => {
     setTitle(e.currentTarget.value)
   }
 
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    setError(null);
-    if (e.charCode === 13) {
-      addTask();
-    }
-  }
-
   const addTask = () => {
     let newTitle = title.trim();
     if (newTitle !== "") {
@@ -27,6 +20,12 @@ export const AddItemForm: FC<AddItemType> = ({addItem}) => {
       setTitle("");
     } else {
       setError("Title is required");
+    }
+  }
+  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    setError(null);
+    if (e.charCode === 13) {
+      addTask();
     }
   }
 
