@@ -1,4 +1,6 @@
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField';
 
 type AddItemType = {
   addItem: (itemTitle: string) => void
@@ -31,13 +33,30 @@ export const AddItemForm: FC<AddItemType> = ({addItem}) => {
 
   return (
       <div>
-        <input value={title}
-               onChange={onChangeHandler}
-               onKeyPress={onKeyPressHandler}
-               className={error ? "error" : ""}
+        {/*<input value={title}*/}
+        {/*       onChange={onChangeHandler}*/}
+        {/*       onKeyPress={onKeyPressHandler}*/}
+        {/*       className={error ? "error" : ""}*/}
+        {/*/>*/}
+        <TextField id="outlined-basic"
+                   label={error ? error : 'Type out smth...'}
+                   variant="outlined"
+                   size='small'
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
         />
-        <button onClick={addTask}>+</button>
-        {error && <div className="error-message">{error}</div>}
+
+        {/*<button onClick={addTask}>+</button>*/}
+        <Button variant="contained"
+                style={{
+                  maxWidth: '39px',
+                  maxHeight: '39px',
+                  minWidth: '39px',
+                  minHeight: '39px',
+                }}
+                onClick={addTask}>+</Button>
       </div>
   );
 };
