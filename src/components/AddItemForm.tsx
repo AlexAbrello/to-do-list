@@ -33,11 +33,6 @@ export const AddItemForm: FC<AddItemType> = ({addItem}) => {
 
   return (
       <div>
-        {/*<input value={title}*/}
-        {/*       onChange={onChangeHandler}*/}
-        {/*       onKeyPress={onKeyPressHandler}*/}
-        {/*       className={error ? "error" : ""}*/}
-        {/*/>*/}
         <TextField id="outlined-basic"
                    label={error ? error : 'Type out smth...'}
                    variant="outlined"
@@ -47,8 +42,6 @@ export const AddItemForm: FC<AddItemType> = ({addItem}) => {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
         />
-
-        {/*<button onClick={addTask}>+</button>*/}
         <Button variant="contained"
                 style={{
                   maxWidth: '39px',
