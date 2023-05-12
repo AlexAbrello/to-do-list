@@ -11,7 +11,6 @@ import {
   addTaskAC,
   changeTaskStatusAC,
   changeTaskTitleAC,
-  newTaskListAC,
   removeTaskAC,
   tasksReducer
 } from "./reducers/tasksReducer";
@@ -79,7 +78,6 @@ function App() {
   }
   const addTodoList = (title: string) => {
     dispatchTodolists(addTodoListAC(title))
-    dispatchTasks(newTaskListAC())
     // setTasks({...tasks, [todoListId]: []})
   }
   function changeFilter(value: FilterValuesType) {

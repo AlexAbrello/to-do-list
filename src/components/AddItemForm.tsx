@@ -3,7 +3,7 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField';
 
 type AddItemType = {
-  addItem: (itemTitle: string) => void
+  addItem: (title: string) => void
 }
 
 export const AddItemForm: FC<AddItemType> = ({addItem}) => {

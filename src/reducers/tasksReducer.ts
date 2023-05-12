@@ -1,6 +1,7 @@
-import {FilterValuesType, TasksStateType} from "../App";
+import {TasksStateType} from "../App";
 import {v1} from "uuid";
 import {TaskType} from "../Todolist";
+import {AddTodoListType} from "./todoListReducer";
 
 
 export const tasksReducer = (state: TasksStateType, action: TasksTsarType): TasksStateType => {
@@ -31,12 +32,18 @@ export const tasksReducer = (state: TasksStateType, action: TasksTsarType): Task
             : el)
       }
     }
+    case "ADD-TODOLIST": {
+      return {
+        ...state,
+        [action.payload.id]: []
+      }
+    }
     default:
       return state
   }
 }
 
-type TasksTsarType = AddTaskType | RemoveTaskType | ChangeTaskTitleType | ChangeTaskStatusType
+type TasksTsarType = AddTaskType | RemoveTaskType | ChangeTaskTitleType | ChangeTaskStatusType | AddTodoListType
 type AddTaskType = ReturnType<typeof addTaskAC>
 type RemoveTaskType = ReturnType<typeof removeTaskAC>
 type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>
@@ -82,5 +89,6 @@ export const changeTaskStatusAC = (id: string, isDone: boolean, todolistId: stri
     }
   } as const
 }
+
 
 
