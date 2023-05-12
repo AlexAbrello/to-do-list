@@ -7,7 +7,7 @@ import {ButtonAppBar} from "./components/ButtonAppBar";
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import {addTaskAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./reducers/tasksReducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./reducers/tasksReducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
 type TodolistType = {
@@ -53,7 +53,7 @@ function App() {
     let todoListId = v1()
     let newTodoList: TodolistType = {id: todoListId, title: title, filter: 'all'}
     setTodolists([newTodoList, ...todolists])
-    // setTasks({...tasks, [todoListId]: []})
+    setTasks({...tasks, [todoListId]: []})
   }
 
   function removeTask(id: string, todolistId: string) {
@@ -65,16 +65,7 @@ function App() {
   }
 
   function changeStatus(id: string, isDone: boolean, todolistId: string) {
-    //достанем нужный массив по todolistId:
-    let todolistTasks = tasks[todolistId];
-    // найдём нужную таску:
-    let task = todolistTasks.find(t => t.id === id);
-    //изменим таску, если она нашлась
-    if (task) {
-      task.isDone = isDone;
-      // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-      setTasks({...tasks});
-    }
+    dispatchTasks(changeTaskStatusAC(id, isDone, todolistId))
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
