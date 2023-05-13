@@ -47,6 +47,7 @@ export const tasksReducer = (state: TasksStateType, action: TasksTsarType): Task
 }
 
 type TasksTsarType = AddTaskType | RemoveTaskType | ChangeTaskTitleType | ChangeTaskStatusType | AddNewTasksListType | RemoveTasksListType
+
 type AddTaskType = ReturnType<typeof addTaskAC>
 type RemoveTaskType = ReturnType<typeof removeTaskAC>
 type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>

@@ -19,7 +19,7 @@ import {
   addTodoListAC, changeTodoListFilterAC,
   changeTodoListTitleAC,
   removeTodoListAC,
-  TodoListReducer
+  todoListReducer
 } from "./reducers/todoListReducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -40,7 +40,7 @@ function App() {
   let todolistId1 = v1();
   let todolistId2 = v1();
 
-  let [todolists, dispatchTodolists] = useReducer(TodoListReducer, [
+  let [todolists, dispatchTodolists] = useReducer(todoListReducer, [
     {id: todolistId1, title: "What to learn", filter: "all"},
     {id: todolistId2, title: "What to buy", filter: "all"}
   ])
