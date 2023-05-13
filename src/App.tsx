@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -8,14 +8,15 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import {
+  addNewTasksListAC,
   addTaskAC,
   changeTaskStatusAC,
   changeTaskTitleAC,
-  removeTaskAC,
+  removeTaskAC, removeTasksListAC,
   tasksReducer
 } from "./reducers/tasksReducer";
 import {
-  addTodoListAC,
+  addTodoListAC, changeTodoListFilterAC,
   changeTodoListTitleAC,
   removeTodoListAC,
   TodoListReducer
@@ -77,23 +78,18 @@ function App() {
     dispatchTodolists(changeTodoListTitleAC(id, title))
   }
   const addTodoList = (title: string) => {
-    dispatchTodolists(addTodoListAC(title))
-    // setTasks({...tasks, [todoListId]: []})
+    let todoListId = v1()
+    dispatchTodolists(addTodoListAC(todoListId, title))
+    dispatchTasks(addNewTasksListAC(todoListId))
   }
-  function changeFilter(value: FilterValuesType) {
-    // let todolist = todolists.find(tl => tl.id === todolistId);
-    // if (todolist) {
-    //   todolist.filter = value;
-    //   setTodolists([...todolists])
-    // }
-    console.log(value)
+  function changeFilter(value: FilterValuesType, todolistId: string) {
+    dispatchTodolists(changeTodoListFilterAC(value, todolistId))
   }
   function removeTodolist(id: string) {
     dispatchTodolists(removeTodoListAC(id))
-    // setTasks({...tasks});
+    dispatchTasks(removeTasksListAC(id))
   }
   // TodoList
-
 
   return (
       <div className="App">
