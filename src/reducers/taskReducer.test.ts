@@ -1,4 +1,11 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasksReducer";
+import {
+  addTaskAC,
+  changeTaskStatusAC,
+  changeTaskTitleAC,
+  removeTaskAC,
+  removeTasksListAC,
+  tasksReducer
+} from "./tasksReducer";
 
 test('task should be added', () => {
 
@@ -80,4 +87,28 @@ test('task status shoul be changed', () => {
 
   expect(endState['todolistId1'][0].isDone).toBe(false)
   expect(endState['todolistId2'][0].isDone).toBe(true)
+})
+
+test('taskList should be removed', () => {
+
+  let startState = {
+    todolistId1: [
+      {id: '1', title: "HTML&CSS", isDone: true},
+      {id: '2', title: "JS", isDone: true}
+    ],
+    todolistId2: [
+      {id: '1', title: "Milk", isDone: true},
+      {id: '2', title: "React Book", isDone: true}
+    ]
+  }
+
+  const action = removeTasksListAC('todolistId2')
+  const endState = tasksReducer(startState, action)
+
+  expect(endState).toStrictEqual({
+    todolistId1: [
+      {id: '1', title: "HTML&CSS", isDone: true},
+      {id: '2', title: "JS", isDone: true}
+    ]
+  })
 })

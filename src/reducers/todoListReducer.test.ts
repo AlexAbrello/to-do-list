@@ -1,4 +1,10 @@
-import {addTodoListAC, changeTodoListTitleAC, removeTodoListAC, TodoListReducer} from "./todoListReducer";
+import {
+  addTodoListAC,
+  changeTodoListFilterAC,
+  changeTodoListTitleAC,
+  removeTodoListAC,
+  TodoListReducer
+} from "./todoListReducer";
 import {TodolistType} from "../App";
 
 test('todolist should be added', () => {
@@ -40,4 +46,18 @@ test('todolist title should be changed', () => {
   const endState = TodoListReducer(startState, action)
 
   expect(endState[0].title).toBe('another title')
+})
+
+test('todolist filter should be changed', () => {
+
+  let startState: TodolistType[] =  [
+    {id: '1', title: "What to learn", filter: "all"},
+    {id: '2', title: "What to buy", filter: "all"}
+  ]
+
+  const action = changeTodoListFilterAC('active', '1')
+  const endState = TodoListReducer(startState, action)
+
+  expect(endState[0].filter).toBe('active')
+  expect(endState[1].filter).toBe('all')
 })
