@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import {SuperCheckBox} from "./components/SuperCheckBox";
 
 export type TaskType = {
   id: string
@@ -53,8 +54,7 @@ export function Todolist(props: PropsType) {
       {
         props.tasks.map(t => {
           const onClickHandler = () => props.removeTask(t.id, props.id)
-          const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            let newIsDoneValue = e.currentTarget.checked;
+          const onChangeHandler = (newIsDoneValue: boolean) => {
             props.changeTaskStatus(t.id, newIsDoneValue, props.id);
           }
           const changeTaskTitleHandler = (title: string) => {
@@ -63,10 +63,7 @@ export function Todolist(props: PropsType) {
 
           return (
               <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                {/*<input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>*/}
-                <Checkbox  onChange={onChangeHandler} checked={t.isDone} />
-                <EditableSpan title={t.title} callBack={changeTaskTitleHandler}/>
-                {/*<button onClick={onClickHandler}>x</button>*/}
+                <SuperCheckBox isDone={t.isDone} callBack={(e) => onChangeHandler(e)}/>
                 <IconButton aria-label="delete" onClick={onClickHandler}>
                   <DeleteIcon />
                 </IconButton>
