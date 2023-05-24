@@ -7,6 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import {SuperCheckBox} from "./components/SuperCheckBox";
+import {Input} from "./components/Input";
+import {FullInput} from "./components/FullInput";
 
 export type TaskType = {
   id: string
@@ -29,7 +31,6 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-
   const addTask = (title: string) => {
     props.addTask(props.id, title)
   }
@@ -64,6 +65,7 @@ export function Todolist(props: PropsType) {
           return (
               <li key={t.id} className={t.isDone ? "is-done" : ""}>
                 <SuperCheckBox isDone={t.isDone} callBack={(e) => onChangeHandler(e)}/>
+                <EditableSpan title={t.title} callBack={changeTaskTitleHandler} />
                 <IconButton aria-label="delete" onClick={onClickHandler}>
                   <DeleteIcon />
                 </IconButton>
