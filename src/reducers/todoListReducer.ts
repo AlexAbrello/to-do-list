@@ -31,7 +31,7 @@ export const addTodoListAC = (id: string, title: string) => {
     type: 'ADD-TODOLIST',
     payload: {
       id,
-      title
+      title,
     }
   } as const
 }

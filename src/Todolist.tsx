@@ -5,10 +5,7 @@ import {EditableSpan} from "./components/EditableSpan";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import {SuperCheckBox} from "./components/SuperCheckBox";
-import {Input} from "./components/Input";
-import {FullInput} from "./components/FullInput";
 
 export type TaskType = {
   id: string
@@ -45,7 +42,6 @@ export function Todolist(props: PropsType) {
   return <div>
     <h3>
       <EditableSpan title={props.title} callBack={changeTodoListTitle} />
-      {/*<button onClick={removeTodolist}>x</button>*/}
       <IconButton aria-label="delete" onClick={removeTodolist}>
         <DeleteIcon />
       </IconButton>
