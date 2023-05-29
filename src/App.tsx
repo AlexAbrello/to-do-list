@@ -77,19 +77,20 @@ function App() {
     dispatchTodolists(changeTodoListTitleAC(id, title))
   }
   const addTodoList = (title: string) => {
-    dispatchTodolists(addTodoListAC(title))
-    dispatchTasks(addTodoListAC(title))
-    console.log(tasks)
+    const action = addTodoListAC(title)
+    dispatchTasks(action)
+    dispatchTodolists(action)
   }
   function changeFilter(value: FilterValuesType, todolistId: string) {
     dispatchTodolists(changeTodoListFilterAC(value, todolistId))
   }
   function removeTodolist(id: string) {
-    dispatchTodolists(removeTodoListAC(id))
     dispatchTasks(removeTodoListAC(id))
+    dispatchTodolists(removeTodoListAC(id))
   }
   // TodoList
-
+  console.log(tasks)
+  console.log(todolists)
   return (
       <div className="App">
         <ButtonAppBar/>
