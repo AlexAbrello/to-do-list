@@ -8,7 +8,6 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import {
-  addNewTasksListAC,
   addTaskAC,
   changeTaskStatusAC,
   changeTaskTitleAC,
@@ -78,9 +77,8 @@ function App() {
     dispatchTodolists(changeTodoListTitleAC(id, title))
   }
   const addTodoList = (title: string) => {
-    let todoListId = v1()
-    dispatchTodolists(addTodoListAC(todoListId, title))
-    dispatchTasks(addNewTasksListAC(todoListId))
+    dispatchTodolists(addTodoListAC(title))
+    dispatchTasks(addTodoListAC(title))
   }
   function changeFilter(value: FilterValuesType, todolistId: string) {
     dispatchTodolists(changeTodoListFilterAC(value, todolistId))

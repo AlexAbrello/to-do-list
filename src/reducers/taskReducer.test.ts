@@ -34,7 +34,7 @@ test('task should be added', () => {
   expect(endState["todolistId1"].length).toBe(2)
 })
 
-test('task shoul be removed', () => {
+test('task should be removed', () => {
 
   const action = removeTaskAC('1', 'todolistId2')
   const endState = tasksReducer(startState, action)
@@ -45,7 +45,7 @@ test('task shoul be removed', () => {
 
 })
 
-test('task title choul be changed', () => {
+test('task title should be changed', () => {
 
   const action = changeTaskTitleAC('1', 'Beer', 'todolistId2')
   const endState = tasksReducer(startState, action)
@@ -54,7 +54,7 @@ test('task title choul be changed', () => {
   expect(endState['todolistId1'][0].title).toBe('HTML&CSS')
 })
 
-test('task status shoul be changed', () => {
+test('task status should be changed', () => {
 
   const action = changeTaskStatusAC('1', false, 'todolistId1')
   const endState = tasksReducer(startState, action)

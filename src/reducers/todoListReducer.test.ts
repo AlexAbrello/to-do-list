@@ -20,7 +20,7 @@ beforeEach(() => {
 
 test('todolist should be added', () => {
 
-  const action = addTodoListAC('3', 'something else')
+  const action = addTodoListAC('something else')
   const endState = todoListReducer(startState, action)
 
   expect(endState.length).toBe(3)
