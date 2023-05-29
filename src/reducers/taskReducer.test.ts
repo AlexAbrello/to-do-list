@@ -79,15 +79,15 @@ test('taskList should be added', () => {
 
 })
 
-test('taskList should be removed', () => {
+test('property with todolistId should be deleted', () => {
 
   const action = removeTodoListAC('todolistId2')
+
   const endState = tasksReducer(startState, action)
 
-  expect(endState).toStrictEqual({
-    todolistId1: [
-      {id: '1', title: "HTML&CSS", isDone: true},
-      {id: '2', title: "JS", isDone: true}
-    ]
-  })
+
+  const keys = Object.keys(endState)
+
+  expect(keys.length).toBe(1)
+  expect(endState['todolistId2']).not.toBeDefined()
 })

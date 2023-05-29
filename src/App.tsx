@@ -79,6 +79,7 @@ function App() {
   const addTodoList = (title: string) => {
     dispatchTodolists(addTodoListAC(title))
     dispatchTasks(addTodoListAC(title))
+    console.log(tasks)
   }
   function changeFilter(value: FilterValuesType, todolistId: string) {
     dispatchTodolists(changeTodoListFilterAC(value, todolistId))
