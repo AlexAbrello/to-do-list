@@ -11,7 +11,7 @@ import {
   addTaskAC,
   changeTaskStatusAC,
   changeTaskTitleAC,
-  removeTaskAC, removeTasksListAC,
+  removeTaskAC,
   tasksReducer
 } from "./reducers/tasksReducer";
 import {
@@ -85,7 +85,7 @@ function App() {
   }
   function removeTodolist(id: string) {
     dispatchTodolists(removeTodoListAC(id))
-    dispatchTasks(removeTasksListAC(id))
+    dispatchTasks(removeTodoListAC(id))
   }
   // TodoList
 

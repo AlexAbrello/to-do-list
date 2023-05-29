@@ -3,10 +3,10 @@ import {
   changeTaskStatusAC,
   changeTaskTitleAC,
   removeTaskAC,
-  removeTasksListAC,
   tasksReducer
 } from "./tasksReducer";
 import {TasksStateType} from "../App";
+import {addTodoListAC, removeTodoListAC} from "./todoListReducer";
 
 let startState: TasksStateType
 
@@ -63,9 +63,25 @@ test('task status should be changed', () => {
   expect(endState['todolistId2'][0].isDone).toBe(true)
 })
 
+test('taskList should be added', () => {
+
+  const action = addTodoListAC('title')
+  const endState = tasksReducer(startState, action)
+
+  const keys = Object.keys(endState)
+  const newKey = keys.find(k => k !== 'todolistId1' && k !== 'todolistId2')
+  if (!newKey) {
+    throw Error('new key should be added')
+  }
+
+  expect(keys.length).toBe(3)
+  expect(endState[newKey]).toEqual([])
+
+})
+
 test('taskList should be removed', () => {
 
-  const action = removeTasksListAC('todolistId2')
+  const action = removeTodoListAC('todolistId2')
   const endState = tasksReducer(startState, action)
 
   expect(endState).toStrictEqual({
