@@ -7,12 +7,18 @@ import {
 } from "./todoListReducer";
 import {TodolistType} from "../App";
 
-test('todolist should be added', () => {
+let startState: TodolistType[]
 
-  let startState: TodolistType[] =  [
+beforeEach(() => {
+
+  startState = [
     {id: '1', title: "What to learn", filter: "all"},
     {id: '2', title: "What to buy", filter: "all"}
   ]
+
+})
+
+test('todolist should be added', () => {
 
   const action = addTodoListAC('3', 'something else')
   const endState = todoListReducer(startState, action)
@@ -23,11 +29,6 @@ test('todolist should be added', () => {
 
 test('todolist should be removed', () => {
 
-  let startState: TodolistType[] =  [
-    {id: '1', title: "What to learn", filter: "all"},
-    {id: '2', title: "What to buy", filter: "all"}
-  ]
-
   const action = removeTodoListAC('1')
   const endState: TodolistType[] = todoListReducer(startState, action)
 
@@ -37,11 +38,6 @@ test('todolist should be removed', () => {
 
 test('todolist title should be changed', () => {
 
-  let startState: TodolistType[] =  [
-    {id: '1', title: "What to learn", filter: "all"},
-    {id: '2', title: "What to buy", filter: "all"}
-  ]
-
   const action = changeTodoListTitleAC('1', 'another title')
   const endState = todoListReducer(startState, action)
 
@@ -49,11 +45,6 @@ test('todolist title should be changed', () => {
 })
 
 test('todolist filter should be changed', () => {
-
-  let startState: TodolistType[] =  [
-    {id: '1', title: "What to learn", filter: "all"},
-    {id: '2', title: "What to buy", filter: "all"}
-  ]
 
   const action = changeTodoListFilterAC('active', '1')
   const endState = todoListReducer(startState, action)
