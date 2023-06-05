@@ -69,7 +69,6 @@ export const Todolist = memo((props: PropsType) => {
           const changeTaskTitleHandler = (title: string) => {
             props.changeTaskTitle(t.id, title, props.id)
           }
-
           return (
               <li key={t.id} className={t.isDone ? "is-done" : ""}>
                 <SuperCheckBox isDone={t.isDone} callBack={(e) => onChangeHandler(e)}/>
@@ -78,7 +77,6 @@ export const Todolist = memo((props: PropsType) => {
                   <DeleteIcon />
                 </IconButton>
               </li>
-
           )
         })
       }
