@@ -13,12 +13,6 @@ const meta: Meta<typeof Task> = {
   title: 'TODOLISTS/Task',
   component: Task,
   tags: ['autodocs'],
-};
-
-export default meta;
-type Story = StoryObj<typeof Task>;
-
-export const TaskIsNotDone: Story = {
   args: {
     changeTaskStatus: action('changeTaskStatus'),
     changeTaskTitle: action('changeTaskTitle'),
@@ -28,12 +22,13 @@ export const TaskIsNotDone: Story = {
   }
 };
 
+export default meta;
+type Story = StoryObj<typeof Task>;
+
+export const TaskIsNotDone: Story = {};
+
 export const TaskIsDone: Story = {
   args: {
-    changeTaskStatus: action('changeTaskStatus'),
-    changeTaskTitle: action('changeTaskTitle'),
-    removeTask: action('removeTask'),
-    task: {id: 'qwer123', isDone: true, title: 'JS'},
-    todolistId: 'qwerty'
+    task: {id: 'qwer123qw', isDone: true, title: 'JS'},
   }
 };
