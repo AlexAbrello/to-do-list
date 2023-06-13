@@ -38,7 +38,7 @@ export const AddItemFormErrorStory: Story = {
                label="Title"
                helperText={"Title is required"}
     />
-    <IconButton color="primary" onClick={args.addItem}>
+    <IconButton color="primary" onClick={() => args.addItem('Button clicked inside form')}>
       <AddBox />
     </IconButton>
   </div>)
