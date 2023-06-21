@@ -32,3 +32,5 @@ type ResponseType<T = {}> = {
   messages: string[]
   data: T
 }
+
+
