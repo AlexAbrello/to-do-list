@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from "react";
 import {todolistAPI} from "../api/todolist-api";
 
 export default {
-  title: 'API'
+  title: 'TASKS'
 }
 
-export const GetTodolists = () => {
+export const GetTasks = () => {
   const [state, setState] = useState<any>(null)
   useEffect(() => {
-    todolistAPI.getTodolists()
+    todolistAPI.getTasks('129bf9e4-b073-4825-9d15-04d55f529e43')
         .then((res) => {
           setState(res.data)
         })
@@ -16,41 +16,36 @@ export const GetTodolists = () => {
   }, [])
   return <div>{JSON.stringify(state)}</div>
 }
-export const CreateTodolist = () => {
+export const CreateTask = () => {
   const [state, setState] = useState<any>(null)
   useEffect(() => {
-    const title = 'REDUX'
-    todolistAPI.createTodolist(title)
+    todolistAPI.createTask('129bf9e4-b073-4825-9d15-04d55f529e43', 'NEW TASK')
         .then((res) => {
           setState(res.data)
         })
-  }, [])
 
+  }, [])
   return <div>{JSON.stringify(state)}</div>
 }
-export const DeleteTodolist = () => {
+export const UpdateTask = () => {
   const [state, setState] = useState<any>(null)
   useEffect(() => {
-    const todolistId = 'f6e789d2-5df8-4d14-89bd-621c43b02fc0'
-    todolistAPI.deleteTodolist(todolistId)
+    todolistAPI.updateTask('129bf9e4-b073-4825-9d15-04d55f529e43', '14c97eba-db24-4a7e-80cb-f2db964207d9', 'NEW TASK UPDATE')
         .then((res) => {
           setState(res.data)
         })
-  }, [])
 
+  }, [])
   return <div>{JSON.stringify(state)}</div>
 }
-export const UpdateTodolistTitle = () => {
+export const DeleteTask = () => {
   const [state, setState] = useState<any>(null)
   useEffect(() => {
-    const todolistId = 'bee9319c-72da-4087-acf3-2c9bc19e70b7'
-    const title = 'REACT'
-        todolistAPI.updateTodolist(todolistId, title)
+    todolistAPI.deleteTask('129bf9e4-b073-4825-9d15-04d55f529e43', '14c97eba-db24-4a7e-80cb-f2db964207d9')
         .then((res) => {
           setState(res.data)
         })
-  }, [])
 
+  }, [])
   return <div>{JSON.stringify(state)}</div>
 }
-
