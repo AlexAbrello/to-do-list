@@ -170,5 +170,4 @@ export const updateTaskTC = (todoId: string, taskId: string, status: TaskStatuse
           dispatch(changeTaskStatusAC(taskId, status, todoId))
         })
   }
-
 }
