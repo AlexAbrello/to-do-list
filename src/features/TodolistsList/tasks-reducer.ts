@@ -85,9 +85,13 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
           dispatch(setAppStatus('failed'))
         }
       })
+      .catch((error) => {
+        dispatch(setAppError(error.message))
+        dispatch(setAppStatus('failed'))
+      })
 }
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
-    (dispatch: Dispatch<ActionsType | SetStatusType>, getState: () => AppRootStateType) => {
+    (dispatch: Dispatch<ActionsType | SetStatusType | SetErrorType>, getState: () => AppRootStateType) => {
       const state = getState()
       const task = state.tasks[todolistId].find(t => t.id === taskId)
       if (!task) {
@@ -108,9 +112,21 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
       dispatch(setAppStatus('loading'))
       todolistsAPI.updateTask(todolistId, taskId, apiModel)
           .then(res => {
-            const action = updateTaskAC(taskId, domainModel, todolistId)
-            dispatch(action)
-            dispatch(setAppStatus('succeeded'))
+            if (res.data.resultCode === 0) {
+              dispatch(updateTaskAC(taskId, domainModel, todolistId))
+              dispatch(setAppStatus('succeeded'))
+            } else {
+              if (res.data.messages.length) {
+                dispatch(setAppError(res.data.messages[0]))
+              } else {
+                dispatch(setAppError('Some error occurred'))
+              }
+              dispatch(setAppStatus('failed'))
+            }
+          })
+          .catch((error) => {
+            dispatch(setAppError(error.message))
+            dispatch(setAppStatus('failed'))
           })
     }
 
