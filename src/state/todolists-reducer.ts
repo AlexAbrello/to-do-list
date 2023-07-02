@@ -1,7 +1,7 @@
 import {v1} from 'uuid';
 import {todolistsAPI, TodolistType} from '../api/todolists-api'
 import {Dispatch} from "redux";
-import {setAppStatus} from "../app-reducer";
+import {setAppStatus} from "../app/app-reducer";
 
 export type RemoveTodolistActionType = {
   type: 'REMOVE-TODOLIST',

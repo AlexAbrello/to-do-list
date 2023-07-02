@@ -29,7 +29,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {AppRootStateType, useAppDispatch} from './state/store';
 import {TaskStatuses, TaskType, todolistsAPI} from './api/todolists-api'
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
-import {InitialStateType, RequestStatusType} from "./app-reducer";
+import {InitialStateType, RequestStatusType} from "./app/app-reducer";
 
 
 export type TasksStateType = {
