@@ -4,6 +4,7 @@ import {AddTodolistActionType, RemoveTodolistActionType, setTodoListAC, SetTodoL
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../api/todolists-api'
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
+import {setAppStatus} from "../app-reducer";
 
 export type RemoveTaskActionType = {
   type: 'REMOVE-TASK',
@@ -137,9 +138,11 @@ export const setTasksAC = (todoId: string, tasks: TaskType[]) => ({
   tasks
 } as const)
 export const setTasksTC = (todoId: string) => (dispatch: Dispatch) => {
+  dispatch(setAppStatus('loading'))
   todolistsAPI.getTasks(todoId)
       .then((res) => {
         dispatch(setTasksAC(todoId, res.data.items))
+        dispatch(setAppStatus('succeeded'))
       })
 }
 export const deleteTaskTC = (taskId: string, todoId: string) => (dispatch: Dispatch) => {
