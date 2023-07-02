@@ -34,7 +34,9 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
-              {loading === 'loading' && <LinearProgress color='error'/>}
+              <div className='linearProgress'>
+                {loading === 'loading' && <LinearProgress color='error'/>}
+              </div>
             </AppBar>
             <Container fixed>
                 <TodolistsList/>
