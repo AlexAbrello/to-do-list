@@ -4,7 +4,7 @@ export type RequestErrorType = string | null
 
 const initialState = {
   status: 'idle' as RequestStatusType,
-  error: 'ERROR' as RequestErrorType
+  error: null as RequestErrorType
 }
 
 export type InitialStateType = typeof initialState
@@ -21,9 +21,9 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 }
 
 export const setAppStatus = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
-export const setError = (error: RequestErrorType) => ({type: 'APP/SET-ERROR', error} as const)
+export const setAppError = (error: RequestErrorType) => ({type: 'APP/SET-ERROR', error} as const)
 
 export type SetStatusType = ReturnType<typeof setAppStatus>
-export type SetErrorType = ReturnType<typeof setError>
+export type SetErrorType = ReturnType<typeof setAppError>
 
 type ActionsType = SetStatusType | SetErrorType
