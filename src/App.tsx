@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {AppRootStateType, useAppDispatch} from './state/store';
 import {TaskStatuses, TaskType, todolistsAPI} from './api/todolists-api'
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
+import {InitialStateType, RequestStatusType} from "./app-reducer";
 
 
 export type TasksStateType = {
@@ -40,6 +41,7 @@ function App() {
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const loading = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -96,7 +98,7 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
-                <LinearProgress color='error'/>
+                {loading === 'loading' && <LinearProgress color='error'/>}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
