@@ -28,6 +28,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import {AppRootStateType, useAppDispatch} from './state/store';
 import {TaskStatuses, TaskType, todolistsAPI} from './api/todolists-api'
+import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 
 
 export type TasksStateType = {
@@ -95,6 +96,7 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                <LinearProgress color='error'/>
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
