@@ -1,6 +1,7 @@
 import {v1} from 'uuid';
 import {todolistsAPI, TodolistType} from '../api/todolists-api'
 import {Dispatch} from "redux";
+import {setAppStatus} from "../app-reducer";
 
 export type RemoveTodolistActionType = {
   type: 'REMOVE-TODOLIST',
@@ -97,9 +98,11 @@ export const setTodoListAC = (todos: TodolistType[]): SetTodoListType => ({
   todos
 })
 export const setTodosTC = () => (dispatch: Dispatch) => {
+  dispatch(setAppStatus('loading'))
   todolistsAPI.getTodolists()
       .then((res) => {
         dispatch(setTodoListAC(res.data))
+        dispatch(setAppStatus('succeeded'))
       })
 }
 
