@@ -3,6 +3,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelTyp
 import {Dispatch} from 'redux'
 import {AppRootStateType} from '../../app/store'
 import {setAppError, setAppStatus, SetErrorType, SetStatusType} from "../../app/app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 const initialState: TasksStateType = {}
 
@@ -77,17 +78,11 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
           dispatch(addTaskAC(task))
           dispatch(setAppStatus('succeeded'))
         } else {
-          if (res.data.messages.length) {
-            dispatch(setAppError(res.data.messages[0]))
-          } else {
-            dispatch(setAppError('Some error occurred'))
-          }
-          dispatch(setAppStatus('failed'))
+          handleServerAppError(res.data, dispatch)
         }
       })
       .catch((error) => {
-        dispatch(setAppError(error.message))
-        dispatch(setAppStatus('failed'))
+        handleServerNetworkError(error, dispatch)
       })
 }
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
@@ -116,17 +111,11 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
               dispatch(updateTaskAC(taskId, domainModel, todolistId))
               dispatch(setAppStatus('succeeded'))
             } else {
-              if (res.data.messages.length) {
-                dispatch(setAppError(res.data.messages[0]))
-              } else {
-                dispatch(setAppError('Some error occurred'))
-              }
-              dispatch(setAppStatus('failed'))
+              handleServerAppError(res.data, dispatch)
             }
           })
           .catch((error) => {
-            dispatch(setAppError(error.message))
-            dispatch(setAppStatus('failed'))
+            handleServerNetworkError(error, dispatch)
           })
     }
 
