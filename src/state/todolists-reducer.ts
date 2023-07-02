@@ -105,4 +105,12 @@ export const setTodosTC = () => (dispatch: Dispatch) => {
         dispatch(setAppStatus('succeeded'))
       })
 }
+export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
+  dispatch(setAppStatus('loading'))
+todolistsAPI.createTodolist(title)
+    .then((res) => {
+      dispatch(addTodolistAC(res.data.data.item.title))
+      dispatch(setAppStatus('succeeded'))
+    })
+}
 
