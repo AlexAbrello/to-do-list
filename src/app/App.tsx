@@ -15,6 +15,7 @@ import LinearProgress from "@mui/material/LinearProgress/LinearProgress";
 import {useAppSelector} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {Login} from "../features/Login/Login";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
             <Container fixed>
                 <TodolistsList/>
             </Container>
+          <Login />
         </div>
     )
 }
