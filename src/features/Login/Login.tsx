@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {loginTC} from "./login-reducer";
-import {useAppDispatch} from "../../app/store";
+import {AppRootStateType, useAppDispatch, useAppSelector} from "../../app/store";
 
 type FormikErrorType = {
   email?: string
@@ -20,6 +20,7 @@ type FormikErrorType = {
 export const Login = () => {
 
   const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
 
   const formik = useFormik({
     initialValues: {
