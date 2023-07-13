@@ -17,7 +17,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
     case "APP/SET-ERROR":
       return {...state, error: action.error}
     case "APP/SET-INITIALIZATION":
-      return {...state, isInitialized: true}
+      return {...state, isInitialized: action.value}
     default:
       return state
   }
@@ -26,7 +26,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 export const setAppStatus = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
 export const setAppError = (error: RequestErrorType) => ({type: 'APP/SET-ERROR', error} as const)
 
-export const setInitialization = () => ({type: 'APP/SET-INITIALIZATION'} as const)
+export const setInitialization = (value: boolean) => ({type: 'APP/SET-INITIALIZATION', value} as const)
 
 export type SetStatusType = ReturnType<typeof setAppStatus>
 export type SetErrorType = ReturnType<typeof setAppError>

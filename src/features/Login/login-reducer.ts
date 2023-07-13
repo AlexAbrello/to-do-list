@@ -47,10 +47,8 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
     if (res.data.resultCode === 0) {
       dispatch(setIsLoggedInAC(true));
     }
+    dispatch(setInitialization(true))
   })
-      .finally(() => {
-        dispatch(setInitialization())
-      })
 }
 export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
   dispatch(setAppStatus('loading'))
