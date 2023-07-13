@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './App.css'
 import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 
@@ -12,16 +12,37 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import {Menu} from '@mui/icons-material';
 import LinearProgress from "@mui/material/LinearProgress/LinearProgress";
-import {useAppSelector} from "./store";
+import {useAppDispatch, useAppSelector} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Login} from "../features/Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
+import {initializeAppTC, logoutTC} from "../features/Login/login-reducer";
+import {CircularProgress} from "@mui/material";
 
 
 function App() {
 
   const loading = useAppSelector<RequestStatusType>(state => state.app.status)
+  const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    debugger
+    dispatch(initializeAppTC())
+  }, [])
+
+  const logout = () => {
+    dispatch(logoutTC())
+  }
+
+  if (!isInitialized) {
+    return <div
+        style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+      <CircularProgress/>
+    </div>
+  }
 
   return (
       <div className="App">
@@ -34,7 +55,7 @@ function App() {
             <Typography variant="h6">
               News
             </Typography>
-            <Button color="inherit">Login</Button>
+            {isLoggedIn && <Button color="inherit" onClick={logout}>Logout</Button>}
           </Toolbar>
           <div className='linearProgress'>
             {loading === 'loading' && <LinearProgress color='error'/>}
