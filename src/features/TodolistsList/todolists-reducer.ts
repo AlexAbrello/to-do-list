@@ -1,5 +1,4 @@
 import {todolistsAPI, TodolistType} from 'api/todolists-api'
-import {Dispatch} from 'redux'
 import {appActions, RequestStatusType} from 'app/app-reducer'
 import {handleServerNetworkError} from 'utils/error-utils'
 import {AppThunk} from 'app/store';
