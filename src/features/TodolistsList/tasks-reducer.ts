@@ -46,9 +46,9 @@ export const slice = createSlice({
                     state[tl.id] = []
                 })
             })
-            .addCase(todolistsActions.clearTodolistsData, (state, action) => {
+            .addCase(todolistsActions.clearTodolistsData, (state) => {
                 console.log(current(state))
-
+                Object.keys(state).forEach(key => delete state[key])
             })
     }
 })
