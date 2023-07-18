@@ -39,8 +39,8 @@ export const slice = createSlice({
         setTodolists: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
             return action.payload.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
         },
-        clearTodolistsData: (state) => {
-            state.length = 0
+        clearTodolistsData: () => {
+            return []
         }
     }
 })
