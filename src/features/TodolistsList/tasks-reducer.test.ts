@@ -72,8 +72,9 @@ test('status of specified task should be changed', () => {
 
     const action = tasksThunks.updateTask.fulfilled({
         taskId: '2',
-        model: {status: TaskStatuses.New}
-    }, 'requestId', 'todolistId2')
+        domainModel: {status: TaskStatuses.New},
+        todolistId: 'todolistId2'
+    }, 'requestId', {taskId: '2', domainModel: {status: TaskStatuses.New}, todolistId: 'todolistId2'})
 
     const endState = tasksReducer(startState, action)
 
@@ -84,8 +85,8 @@ test('title of specified task should be changed', () => {
 
     const action = tasksThunks.updateTask.fulfilled({
         taskId: '2',
-        model: {title: "yogurt"}
-    }, 'requestId', 'todolistId2')
+        domainModel: {title: "yogurt"}, todolistId: 'todolistId2'
+    }, 'requestId', {todolistId: 'todolistId2', domainModel: {title: 'yogurt'}, taskId: '2'})
 
     const endState = tasksReducer(startState, action)
 
