@@ -8,7 +8,7 @@ import {
     removeTodolistTC,
     todolistsActions
 } from './todolists-reducer'
-import {removeTaskTC, tasksThunks, updateTaskTC} from './tasks-reducer'
+import {removeTaskTC, tasksThunks} from './tasks-reducer'
 import {TaskStatuses} from 'api/todolists-api'
 import {Grid, Paper} from '@mui/material'
 import {AddItemForm} from 'components/AddItemForm/AddItemForm'
