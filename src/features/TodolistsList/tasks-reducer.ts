@@ -4,6 +4,7 @@ import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils'
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {todolistsActions} from "features/TodolistsList/todolists-reducer";
 import {appActions} from "app/app-reducer";
+import {createAppAsyncThunk} from "utils/create-app-async-thunk";
 
 export const slice = createSlice({
     name: 'tasks',
@@ -52,7 +53,7 @@ export const slice = createSlice({
     }
 })
 
-const fetchTasks = createAsyncThunk<{ tasks: TaskType[], todolistId: string }, string, { rejectValue: unknown }>
+const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }, string>
 ('tasks/fetchTasks', async (todolistId: string, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI
 
