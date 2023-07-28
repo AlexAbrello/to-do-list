@@ -1,4 +1,11 @@
-import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from 'api/todolists-api'
+import {
+    TaskPriorities,
+    TaskStatuses,
+    TaskType,
+    todolistsAPI,
+    UpdateTaskArgType,
+    UpdateTaskModelType
+} from 'api/todolists-api'
 import {AppThunk} from 'app/store'
 import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils'
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
@@ -101,12 +108,6 @@ const addTask = createAppAsyncThunk<{task: TaskType}, {todolistId: string, title
         return rejectWithValue(null)
     }
 })
-
-type UpdateTaskArgType = {
-    taskId: string,
-    domainModel: UpdateDomainTaskModelType,
-    todolistId: string
-}
 
 const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
 ('tasks/updateTask', async (arg, thunkAPI) => {
