@@ -52,7 +52,8 @@ export const slice = createSlice({
     }
 })
 
-const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (todolistId: string, thunkAPI) => {
+const fetchTasks = createAsyncThunk<{ tasks: TaskType[], todolistId: string }, string, { rejectValue: unknown }>
+('tasks/fetchTasks', async (todolistId: string, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI
 
     try {
@@ -61,8 +62,7 @@ const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (todolistId: strin
         const tasks = res.data.items
         dispatch(appActions.setAppStatus({status: 'succeeded'}))
         return {tasks, todolistId}
-    }
-    catch (error: any) {
+    } catch (error: any) {
         handleServerNetworkError(error, dispatch)
         return rejectWithValue(null)
     }
