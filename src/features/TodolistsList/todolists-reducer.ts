@@ -54,7 +54,7 @@ export const slice = createSlice({
 })
 
 const fetchTodos = createAppAsyncThunk<{ todolists: TodolistType[] }>
-('todolists/fetchTodos', async (thunkAPI) => {
+('todolists/fetchTodos', async (arg, thunkAPI) => {
 
     const {dispatch, rejectWithValue} = thunkAPI
 
@@ -63,7 +63,7 @@ const fetchTodos = createAppAsyncThunk<{ todolists: TodolistType[] }>
         const res = await todolistsAPI.getTodolists()
         const todolists = res.data
         dispatch(appActions.setAppStatus({status: 'succeeded'}))
-        return todolists
+        return {todolists}
     } catch (error) {
         handleServerNetworkError(error, dispatch)
         return rejectWithValue(null)
