@@ -36,7 +36,7 @@ test('correct todolist should be added', () => {
     }
 
 
-    const endState = todolistsReducer(startState, todolistsActions.addTodolist({todolist: todolist}))
+    const endState = todolistsReducer(startState, todosThunks.addTodos.fulfilled({todolist}, 'requestId', {title: 'New Todolist'}))
 
     expect(endState.length).toBe(3)
     expect(endState[0].title).toBe(todolist.title)
