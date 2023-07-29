@@ -39,9 +39,9 @@ export const slice = createSlice({
             .addCase(fetchTasks.fulfilled, (state, action) => {
                 state[action.payload.todolistId] = action.payload.tasks
             })
-            .addCase(todolistsActions.addTodolist, (state, action) => {
-                state[action.payload.todolist.id] = []
-            })
+            // .addCase(todolistsActions.addTodolist, (state, action) => {
+            //     state[action.payload.todolist.id] = []
+            // })
             .addCase(todolistsActions.removeTodolist, (state, action) => {
                 delete state[action.payload.id]
             })
@@ -50,6 +50,9 @@ export const slice = createSlice({
             //         state[tl.id] = []
             //     })
             // })
+            .addCase(todosThunks.addTodos.fulfilled, (state, action) => {
+                state[action.payload.todolist.id] = []
+            })
             .addCase(todosThunks.fetchTodos.fulfilled, (state, action) => {
                 action.payload.todolists.forEach((tl) => {
                     state[tl.id] = []
