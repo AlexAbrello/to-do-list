@@ -11,10 +11,10 @@ export const slice = createSlice({
     name: 'todolists',
     initialState: [] as TodolistDomainType[],
     reducers: {
-        removeTodolist: (state, action: PayloadAction<{ id: string }>) => {
-            const index = state.findIndex(tl => tl.id === action.payload.id)
-            if (index !== -1) state.splice(index, 1)
-        },
+        // removeTodolist: (state, action: PayloadAction<{ id: string }>) => {
+        //     const index = state.findIndex(tl => tl.id === action.payload.id)
+        //     if (index !== -1) state.splice(index, 1)
+        // },
         // addTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
         //     const newTodolist: TodolistDomainType = {...action.payload.todolist, filter: 'all', entityStatus: 'idle'}
         //     state.unshift(newTodolist)
@@ -52,6 +52,10 @@ export const slice = createSlice({
             .addCase(addTodos.fulfilled, (state, action) => {
                 const newTodolist: TodolistDomainType = {...action.payload.todolist, filter: 'all', entityStatus: 'idle'}
                 state.unshift(newTodolist)
+            })
+            .addCase(removeTodolist.fulfilled, (state, action) => {
+                const index = state.findIndex(tl => tl.id === action.payload.todolistId)
+                if (index !== -1) state.splice(index, 1)
             })
     }
 })
@@ -108,26 +112,46 @@ const addTodos = createAppAsyncThunk<{todolist: TodolistType}, {title: string}>
         return rejectWithValue(null)
     }
 })
-export const removeTodolistTC = (todolistId: string): AppThunk => {
-    return (dispatch) => {
-        //изменим глобальный статус приложения, чтобы вверху полоса побежала
-        dispatch(appActions.setAppStatus({status: 'loading'}))
-        //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
-        dispatch(todolistsActions.changeTodolistEntityStatus({id: todolistId, entityStatus: 'loading'}))
-        todolistsAPI.deleteTodolist(todolistId)
-            .then((res) => {
-                dispatch(todolistsActions.removeTodolist({id: todolistId}))
-                //скажем глобально приложению, что асинхронная операция завершена
-                dispatch(appActions.setAppStatus({status: 'succeeded'}))
-            })
-    }
-}
+// export const removeTodolistTC = (todolistId: string): AppThunk => {
+//     return (dispatch) => {
+//         //изменим глобальный статус приложения, чтобы вверху полоса побежала
+//         dispatch(appActions.setAppStatus({status: 'loading'}))
+//         //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
+//         dispatch(todolistsActions.changeTodolistEntityStatus({id: todolistId, entityStatus: 'loading'}))
+//         todolistsAPI.deleteTodolist(todolistId)
+//             .then((res) => {
+//                 dispatch(todolistsActions.removeTodolist({id: todolistId}))
+//                 //скажем глобально приложению, что асинхронная операция завершена
+//                 dispatch(appActions.setAppStatus({status: 'succeeded'}))
+//             })
+//     }
+// }
 
-const removeTodolist = createAppAsyncThunk<any, any>
+const removeTodolist = createAppAsyncThunk<{todolistId: string}, {todolistId: string}>
+('todolists/removeTodolist', async (arg, thunkAPI) => {
+
+    const {dispatch, rejectWithValue} = thunkAPI
+
+    try {
+        dispatch(appActions.setAppStatus({status: 'loading'}))
+        dispatch(todolistsActions.changeTodolistEntityStatus({id: arg.todolistId, entityStatus: 'loading'}))
+        const res = await todolistsAPI.deleteTodolist(arg.todolistId)
+        if (res.data.resultCode === 0) {
+            dispatch(appActions.setAppStatus({status: 'succeeded'}))
+            return arg
+        } else {
+            handleServerAppError(res.data, dispatch);
+            return rejectWithValue(null)
+        }
+    } catch (error) {
+        handleServerNetworkError(error, dispatch)
+        return rejectWithValue(null)
+    }
+})
 
 export const todolistsReducer = slice.reducer
 export const todolistsActions = slice.actions
-export const todosThunks = {fetchTodos, addTodos}
+export const todosThunks = {fetchTodos, addTodos, removeTodolist}
 
 
 // thunks

@@ -42,8 +42,11 @@ export const slice = createSlice({
             // .addCase(todolistsActions.addTodolist, (state, action) => {
             //     state[action.payload.todolist.id] = []
             // })
-            .addCase(todolistsActions.removeTodolist, (state, action) => {
-                delete state[action.payload.id]
+            // .addCase(todolistsActions.removeTodolist, (state, action) => {
+            //     delete state[action.payload.id]
+            // })
+            .addCase(todosThunks.removeTodolist.fulfilled, (state, action) => {
+                delete state[action.payload.todolistId]
             })
             // .addCase(todolistsActions.setTodolists, (state, action) => {
             //     action.payload.todolists.forEach(tl => {
