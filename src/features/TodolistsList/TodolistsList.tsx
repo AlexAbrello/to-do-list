@@ -5,7 +5,7 @@ import {
     todolistsActions, todosThunks
 } from './todolists-reducer'
 import {tasksThunks} from './tasks-reducer'
-import {TaskStatuses} from 'api/todolists-api'
+import {TaskStatuses} from 'common/api/todolists-api'
 import {Grid, Paper} from '@mui/material'
 import {AddItemForm} from 'components/AddItemForm/AddItemForm'
 import {Todolist} from './Todolist/Todolist'

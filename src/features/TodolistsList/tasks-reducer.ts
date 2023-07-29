@@ -5,7 +5,7 @@ import {
     todolistsAPI,
     UpdateTaskArgType,
     UpdateTaskModelType
-} from 'api/todolists-api'
+} from 'common/api/todolists-api'
 import {createSlice} from "@reduxjs/toolkit";
 import {todolistsActions, todosThunks} from "features/TodolistsList/todolists-reducer";
 import {appActions} from "app/app-reducer";
