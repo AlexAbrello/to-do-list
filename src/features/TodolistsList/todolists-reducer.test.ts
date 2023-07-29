@@ -22,7 +22,7 @@ beforeEach(() => {
 
 test('correct todolist should be removed', () => {
 
-    const endState = todolistsReducer(startState, todosThunks.removeTodolist.fulfilled({todolistId: todolistId1}, 'requestId', {todolistId: todolistId1}) )
+    const endState = todolistsReducer(startState, todosThunks.removeTodolist.fulfilled({todolistId: todolistId1}, 'requestId', {todolistId: todolistId1}))
 
     expect(endState.length).toBe(1)
     expect(endState[0].id).toBe(todolistId2)
@@ -47,7 +47,11 @@ test('correct todolist should be added', () => {
 test('correct todolist should change its name', () => {
     let newTodolistTitle = 'New Todolist'
 
-    const action = todolistsActions.changeTodolistTitle({id: todolistId2, title: newTodolistTitle})
+
+    const action = todosThunks.changeTodolistTitle.fulfilled(
+        {id: todolistId2, title: newTodolistTitle},
+        'requestId',
+        {id: todolistId2, title: newTodolistTitle})
 
     const endState = todolistsReducer(startState, action)
 
