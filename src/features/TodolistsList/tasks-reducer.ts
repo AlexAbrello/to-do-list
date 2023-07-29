@@ -6,11 +6,11 @@ import {
     UpdateTaskArgType,
     UpdateTaskModelType
 } from 'api/todolists-api'
-import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils'
 import {createSlice} from "@reduxjs/toolkit";
 import {todolistsActions, todosThunks} from "features/TodolistsList/todolists-reducer";
 import {appActions} from "app/app-reducer";
-import {createAppAsyncThunk} from "utils/create-app-async-thunk";
+import {createAppAsyncThunk} from "common/utils/create-app-async-thunk";
+import {handleServerAppError, handleServerNetworkError} from "common/utils";
 
 export const slice = createSlice({
     name: 'tasks',

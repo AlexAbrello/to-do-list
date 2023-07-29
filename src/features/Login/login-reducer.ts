@@ -1,8 +1,8 @@
 import {Dispatch} from 'redux'
 import {authAPI, LoginParamsType} from "api/todolists-api";
-import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
 import {appActions} from "app/app-reducer";
 import {AppThunk} from "app/store";
+import {handleServerAppError, handleServerNetworkError} from "common/utils";
 
 const initialState = {
   isLoggedIn: false
