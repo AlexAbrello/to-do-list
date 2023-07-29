@@ -4,6 +4,7 @@ import {handleServerNetworkError} from 'utils/error-utils'
 import {AppThunk} from 'app/store';
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {createAppAsyncThunk} from "utils/create-app-async-thunk";
+import {tasksThunks} from "features/TodolistsList/tasks-reducer";
 //import {fetchTasksTC} from "features/TodolistsList/tasks-reducer";
 
 
@@ -61,6 +62,9 @@ const fetchTodos = createAppAsyncThunk<{ todolists: TodolistType[] }>
         dispatch(appActions.setAppStatus({status: 'loading'}))
         const res = await todolistsAPI.getTodolists()
         const todolists = res.data
+        todolists.forEach(tl => {
+            dispatch(tasksThunks.fetchTasks(tl.id))
+        })
         dispatch(appActions.setAppStatus({status: 'succeeded'}))
         return {todolists}
     } catch (error) {
