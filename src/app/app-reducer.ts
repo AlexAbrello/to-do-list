@@ -1,7 +1,4 @@
-import {Dispatch} from 'redux'
-import {authAPI} from 'common/api/todolists-api'
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {authActions} from "features/Login/auth-reducer";
 
 const initialState: InitialStateType = {
     status: 'idle' as RequestStatusType,
@@ -38,11 +35,4 @@ export type InitialStateType = {
     isInitialized: boolean
 }
 
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-    authAPI.me().then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(authActions.setIsLoggedIn({isLoggedIn: true}));
-        }
-        dispatch(appActions.setAppInitialized({isInitialized: true}));
-    })
-}
+
