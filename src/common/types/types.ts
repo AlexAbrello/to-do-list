@@ -9,9 +9,3 @@ export type ResponseType<D = {}> = {
     data: D
     fieldsErrors: FieldErrorType[]
 }
-
-// export type ResponseType<D = {}> = {
-//     resultCode: number
-//     messages: Array<string>
-//     data: D
-// }
