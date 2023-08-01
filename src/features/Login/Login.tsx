@@ -5,7 +5,7 @@ import {Navigate} from 'react-router-dom'
 import {useAppDispatch} from 'common/hooks/useAppDispatch';
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from '@mui/material'
 import {selectIsLoggedIn} from "features/Login/login.selectors";
-import {loginTC} from "features/Login/auth-reducer";
+import {authThunks} from "features/Login/auth-reducer";
 
 export const Login = () => {
 
@@ -33,7 +33,7 @@ export const Login = () => {
             rememberMe: false
         },
         onSubmit: values => {
-            dispatch(loginTC(values));
+            dispatch(authThunks.login(values));
         },
     })
 

@@ -1,10 +1,7 @@
 import {authAPI, LoginParamsType} from 'common/api/todolists-api'
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AppThunk} from "app/store";
+import {createSlice} from "@reduxjs/toolkit";
 import {appActions} from "app/app-reducer";
-import {todolistsActions} from "features/TodolistsList/todolists-reducer";
 import {createAppAsyncThunk, handleServerAppError, handleServerNetworkError} from "common/utils";
-import {Dispatch} from "redux";
 
 export const slice = createSlice({
     name: 'auth',
@@ -80,6 +77,9 @@ const initializeApp = createAppAsyncThunk<{isLoggedIn: boolean}, void>
     } catch (error) {
         handleServerNetworkError(error, dispatch)
         return rejectWithValue(null)
+    }
+    finally {
+        dispatch(appActions.setAppInitialized({ isInitialized: true }))
     }
 })
 

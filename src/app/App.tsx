@@ -3,11 +3,8 @@ import './App.css'
 import {TodolistsList} from 'features/TodolistsList/TodolistsList'
 import {ErrorSnackbar} from 'components/ErrorSnackbar/ErrorSnackbar'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppRootStateType} from './store'
-import {initializeAppTC, RequestStatusType} from './app-reducer'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import {Login} from 'features/Login/Login'
-import {logoutTC} from 'features/Login/auth-reducer'
 import {
   AppBar,
   Button,
@@ -21,6 +18,7 @@ import {
 import {Menu} from '@mui/icons-material'
 import {selectIsLoggedIn} from "features/Login/login.selectors";
 import {selectIsInitialized, selectStatus} from "app/app.selectors";
+import {authThunks} from "features/Login/auth-reducer";
 
 type PropsType = {
   demo?: boolean
@@ -34,11 +32,11 @@ function App({demo = false}: PropsType) {
   const dispatch = useDispatch<any>()
 
   useEffect(() => {
-    dispatch(initializeAppTC())
+    dispatch(authThunks.initializeApp())
   }, [])
 
   const logoutHandler = useCallback(() => {
-    dispatch(logoutTC())
+    dispatch(authThunks.logout())
   }, [])
 
   if (!isInitialized) {
