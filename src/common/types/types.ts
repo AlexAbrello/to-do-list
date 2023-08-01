@@ -7,5 +7,11 @@ export type ResponseType<D = {}> = {
     resultCode: number
     messages: string[]
     data: D
-    fieldsErrors: null | FieldErrorType[]
+    fieldsErrors: FieldErrorType[]
 }
+
+// export type ResponseType<D = {}> = {
+//     resultCode: number
+//     messages: Array<string>
+//     data: D
+// }

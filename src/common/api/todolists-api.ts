@@ -1,16 +1,8 @@
-import axios from 'axios'
 import {UpdateDomainTaskModelType} from "features/TodolistsList/tasks-reducer";
+import {instance} from "common/api/instance";
 import {ResponseType} from "common/types";
 
-export const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    withCredentials: true,
-    headers: {
-        'API-KEY': '1cdd9f77-c60e-4af5-b194-659e4ebd5d41'
-    }
-})
 
-// api
 export const todolistsAPI = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists');
@@ -31,7 +23,7 @@ export const todolistsAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
     },
     createTask(todolistId: string, taskTitile: string) {
-        return instance.post<ResponseType>(`todo-lists/${todolistId}/tasks`, {title: taskTitile});
+        return instance.post<ResponseType<{item: TaskType}>>(`todo-lists/${todolistId}/tasks`, {title: taskTitile});
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
@@ -45,11 +37,7 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
-// export type ResponseType<D = {}> = {
-//     resultCode: number
-//     messages: Array<string>
-//     data: D
-// }
+
 
 export enum TaskStatuses {
     New = 0,

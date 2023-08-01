@@ -70,7 +70,7 @@ const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }
     }
 })
 
-const addTask = createAppAsyncThunk<{ task: TaskType }, { todolistId: string, title: string }>
+const addTask = createAppAsyncThunk<{task: TaskType}, { todolistId: string, title: string }>
 ('tasks/addTask', async (arg, thunkAPI) => {
 
     const {dispatch, rejectWithValue} = thunkAPI
