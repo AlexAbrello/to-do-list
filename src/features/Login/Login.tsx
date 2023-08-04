@@ -41,7 +41,7 @@ export const Login = () => {
                 .then(res => {
                 })
                 .catch((reason: ResponseType) => {
-                    reason.fieldsErrors.forEach(f => {
+                    reason.fieldsErrors?.forEach(f => {
                         formikHelpers.setFieldError(f.field, f.error)
                     })
                 })
