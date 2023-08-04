@@ -10,7 +10,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {todolistsActions, todosThunks} from "features/TodolistsList/todolists-reducer";
 import {appActions} from "app/app-reducer";
 import {createAppAsyncThunk} from "common/utils/create-app-async-thunk";
-import {handleServerAppError, handleServerNetworkError} from "common/utils";
+import {handleServerAppError, handleServerNetworkError, thunkTryCatch} from "common/utils";
 
 export const slice = createSlice({
     name: 'tasks',
@@ -70,26 +70,42 @@ const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }
     }
 })
 
+// const addTask = createAppAsyncThunk<{task: TaskType}, { todolistId: string, title: string }>
+// ('tasks/addTask', async (arg, thunkAPI) => {
+//
+//     const {dispatch, rejectWithValue} = thunkAPI
+//
+//     try {
+//         dispatch(appActions.setAppStatus({status: 'loading'}))
+//         const res = await todolistsAPI.createTask(arg.todolistId, arg.title)
+//         if (res.data.resultCode === 0) {
+//             const task = res.data.data.item
+//             dispatch(appActions.setAppStatus({status: 'succeeded'}))
+//             return {task}
+//         } else {
+//             handleServerAppError(res.data, dispatch);
+//             return rejectWithValue(null)
+//         }
+//     } catch (error) {
+//         handleServerNetworkError(error, dispatch)
+//         return rejectWithValue(null)
+//     }
+// })
+
 const addTask = createAppAsyncThunk<{task: TaskType}, { todolistId: string, title: string }>
-('tasks/addTask', async (arg, thunkAPI) => {
-
+('tasks/addtask', async (arg, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI
-
-    try {
-        dispatch(appActions.setAppStatus({status: 'loading'}))
+    return thunkTryCatch(thunkAPI, async () => {
         const res = await todolistsAPI.createTask(arg.todolistId, arg.title)
         if (res.data.resultCode === 0) {
-            const task = res.data.data.item
-            dispatch(appActions.setAppStatus({status: 'succeeded'}))
-            return {task}
-        } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null)
-        }
-    } catch (error) {
-        handleServerNetworkError(error, dispatch)
-        return rejectWithValue(null)
-    }
+             const task = res.data.data.item
+             dispatch(appActions.setAppStatus({status: 'succeeded'}))
+             return {task}
+         } else {
+             handleServerAppError(res.data, dispatch);
+             return rejectWithValue(null)
+         }
+    })
 })
 
 const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
