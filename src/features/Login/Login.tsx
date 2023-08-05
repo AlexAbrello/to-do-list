@@ -38,8 +38,6 @@ export const Login = () => {
         onSubmit: (values: LoginParamsType, formikHelpers: FormikHelpers<LoginParamsType>) => {
             dispatch(authThunks.login(values))
                 .unwrap()
-                .then(res => {
-                })
                 .catch((reason: ResponseType) => {
                     reason.fieldsErrors?.forEach(f => {
                         formikHelpers.setFieldError(f.field, f.error)
@@ -84,7 +82,8 @@ export const Login = () => {
                             margin="normal"
                             {...formik.getFieldProps("password")}
                         />
-                        {formik.errors.password ? <div className={style.fieldError}>{formik.errors.password}</div> : null}
+                        {formik.errors.password ?
+                            <div className={style.fieldError}>{formik.errors.password}</div> : null}
                         <FormControlLabel
                             label={'Remember me'}
                             control={<Checkbox
