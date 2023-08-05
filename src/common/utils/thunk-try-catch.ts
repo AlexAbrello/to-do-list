@@ -4,6 +4,12 @@ import { BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
 import {appActions} from "app/app-reducer";
 import { ResponseType} from 'common/types';
 
+/**
+ * Утилитная функция для запросов на сервер
+ * @param thunkAPI - объект с параметрами для работы с запросом
+ * @param logic - сам запрос на сервер
+ */
+
 export const thunkTryCatch = async <T>(
     thunkAPI: BaseThunkAPI<AppRootStateType, any, AppDispatch, null | ResponseType>,
     logic: () => Promise<T>
