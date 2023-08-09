@@ -3,32 +3,34 @@ import {AddItemForm} from 'components/AddItemForm/AddItemForm'
 import {EditableSpan} from 'components/EditableSpan/EditableSpan'
 import {Task} from './Task/Task'
 import {TaskStatuses, TaskType} from 'common/api/todolists-api'
-import {FilterValuesType, TodolistDomainType} from '../todolists-reducer'
+import {FilterValuesType, TodolistDomainType, todosThunks} from '../todolists-reducer'
 import {Button, IconButton} from '@mui/material'
 import {Delete} from '@mui/icons-material'
+import {useActions} from "common/hooks";
+import {tasksThunks} from "features/TodolistsList/tasks-reducer";
 
 type PropsType = {
     todolist: TodolistDomainType
     tasks: Array<TaskType>
     changeFilter: (value: FilterValuesType, todolistId: string) => void
-    addTask: (title: string, todolistId: string) => void
-    removeTodolist: (id: string) => void
-    changeTodolistTitle: (id: string, newTitle: string) => void
     demo?: boolean
 }
 
 export const Todolist = React.memo(function ({demo = false, ...props}: PropsType) {
 
-    const addTask = useCallback((title: string) => {
-        props.addTask(title, props.todolist.id)
-    }, [props.addTask, props.todolist.id])
+    const {addTask} = useActions(tasksThunks)
+    const {removeTodolist, changeTodolistTitle} = useActions(todosThunks)
 
-    const removeTodolist = () => {
-        props.removeTodolist(props.todolist.id)
+    const addTaskCallBack = (title: string) => {
+        addTask({title: title, todolistId: props.todolist.id})
     }
-    const changeTodolistTitle = useCallback((title: string) => {
-        props.changeTodolistTitle(props.todolist.id, title)
-    }, [props.todolist.id, props.changeTodolistTitle])
+
+    const removeTodolistHandler = () => {
+       removeTodolist({todolistId: props.todolist.id})
+    }
+    const changeTodolistTitleHandler = (title: string) => {
+        changeTodolistTitle({title: title, id: props.todolist.id})
+    }
 
     const onAllClickHandler = useCallback(() => props.changeFilter('all', props.todolist.id), [props.todolist.id, props.changeFilter])
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.todolist.id), [props.todolist.id, props.changeFilter])
@@ -45,12 +47,12 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
     }
 
     return <div>
-        <h3><EditableSpan value={props.todolist.title} onChange={changeTodolistTitle}/>
-            <IconButton onClick={removeTodolist} disabled={props.todolist.entityStatus === 'loading'}>
+        <h3><EditableSpan value={props.todolist.title} onChange={changeTodolistTitleHandler}/>
+            <IconButton onClick={removeTodolistHandler} disabled={props.todolist.entityStatus === 'loading'}>
                 <Delete/>
             </IconButton>
         </h3>
-        <AddItemForm addItem={addTask} disabled={props.todolist.entityStatus === 'loading'}/>
+        <AddItemForm addItem={addTaskCallBack} disabled={props.todolist.entityStatus === 'loading'}/>
         <div>
             {
                 tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={props.todolist.id}/>)
