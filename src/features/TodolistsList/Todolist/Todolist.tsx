@@ -12,7 +12,6 @@ import {tasksThunks} from "features/TodolistsList/tasks-reducer";
 type PropsType = {
     todolist: TodolistDomainType
     tasks: Array<TaskType>
-    changeFilter: (value: FilterValuesType, todolistId: string) => void
     demo?: boolean
 }
 

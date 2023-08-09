@@ -1,18 +1,13 @@
 import React, {useCallback, useEffect} from 'react'
 import {useSelector} from 'react-redux'
-import {
-    FilterValuesType,
-    todolistsActions, todosThunks
-} from './todolists-reducer'
-import {tasksThunks} from './tasks-reducer'
-import {TaskStatuses} from 'common/api/todolists-api'
+import {todosThunks} from './todolists-reducer'
 import {Grid, Paper} from '@mui/material'
 import {AddItemForm} from 'components/AddItemForm/AddItemForm'
 import {Todolist} from './Todolist/Todolist'
 import {Navigate} from 'react-router-dom'
-import {useAppDispatch} from 'common/hooks/useAppDispatch';
 import {selectTasks, selectTodolist} from "features/TodolistsList/todolistsList.selectors";
 import {selectIsLoggedIn} from "features/Login/login.selectors";
+import {useActions} from "common/hooks";
 
 type PropsType = {
     demo?: boolean
@@ -24,22 +19,18 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     const tasks = useSelector(selectTasks)
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
-    const dispatch = useAppDispatch()
+    const {fetchTodos, addTodos} = useActions(todosThunks)
 
     useEffect(() => {
         if (demo || !isLoggedIn) {
             return;
         }
-        dispatch(todosThunks.fetchTodos())
+        fetchTodos()
     }, [])
 
-    const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
-        dispatch(todolistsActions.changeTodolistFilter({filter: value, id: todolistId}))
+    const addTodolistCallBack = useCallback((title: string) => {
+        addTodos({title})
     }, [])
-
-    const addTodolist = useCallback((title: string) => {
-        dispatch(todosThunks.addTodos({title}))
-    }, [dispatch])
 
     if (!isLoggedIn) {
         return <Navigate to={"/login"}/>
@@ -47,7 +38,7 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
 
     return <>
         <Grid container style={{padding: '20px'}}>
-            <AddItemForm addItem={addTodolist}/>
+            <AddItemForm addItem={addTodolistCallBack}/>
         </Grid>
         <Grid container spacing={3}>
             {
@@ -59,7 +50,6 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
                             <Todolist
                                 todolist={tl}
                                 tasks={allTodolistTasks}
-                                changeFilter={changeFilter}
                                 demo={demo}
                             />
                         </Paper>
