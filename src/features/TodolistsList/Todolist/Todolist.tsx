@@ -3,7 +3,7 @@ import {AddItemForm} from 'components/AddItemForm/AddItemForm'
 import {EditableSpan} from 'components/EditableSpan/EditableSpan'
 import {Task} from './Task/Task'
 import {TaskStatuses, TaskType} from 'common/api/todolists-api'
-import {FilterValuesType, TodolistDomainType, todosThunks} from '../todolists-reducer'
+import {FilterValuesType, TodolistDomainType, todolistsActions, todosThunks} from '../todolists-reducer'
 import {Button, IconButton} from '@mui/material'
 import {Delete} from '@mui/icons-material'
 import {useActions} from "common/hooks";
@@ -20,6 +20,7 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
 
     const {addTask} = useActions(tasksThunks)
     const {removeTodolist, changeTodolistTitle} = useActions(todosThunks)
+    const {changeTodolistFilter} = useActions(todolistsActions)
 
     const addTaskCallBack = (title: string) => {
         addTask({title: title, todolistId: props.todolist.id})
@@ -32,9 +33,9 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
         changeTodolistTitle({title: title, id: props.todolist.id})
     }
 
-    const onAllClickHandler = useCallback(() => props.changeFilter('all', props.todolist.id), [props.todolist.id, props.changeFilter])
-    const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.todolist.id), [props.todolist.id, props.changeFilter])
-    const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.todolist.id), [props.todolist.id, props.changeFilter])
+    const onAllClickHandler = useCallback(() => changeTodolistFilter({filter: 'all', id: props.todolist.id}), [props.todolist.id, props.changeFilter])
+    const onActiveClickHandler = useCallback(() => changeTodolistFilter({filter: 'active', id: props.todolist.id}), [props.todolist.id, props.changeFilter])
+    const onCompletedClickHandler = useCallback(() => changeTodolistFilter({filter: 'completed', id: props.todolist.id}), [props.todolist.id, props.changeFilter])
 
 
     let tasksForTodolist = props.tasks
