@@ -1,7 +1,7 @@
 import React from 'react'
 import {AddItemForm} from 'components/AddItemForm/AddItemForm'
 import {EditableSpan} from 'components/EditableSpan/EditableSpan'
-import {Task} from './Task/Task'
+import {Task} from './tasks/Task/Task'
 import {TaskStatuses, TaskType} from 'common/api/todolists-api'
 import {TodolistDomainType, todosThunks} from '../todolists-reducer'
 import {IconButton} from '@mui/material'
@@ -9,6 +9,7 @@ import {Delete} from '@mui/icons-material'
 import {useActions} from "common/hooks";
 import {tasksThunks} from "features/TodolistsList/tasks-reducer";
 import {FilterTasksButtons} from "features/TodolistsList/Todolist/filterTasksButtons/filter-tasks-buttons";
+import {Tasks} from "features/TodolistsList/Todolist/tasks/tasks";
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -32,15 +33,6 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
         changeTodolistTitle({title: title, id: props.todolist.id})
     }
 
-    let tasksForTodolist = props.tasks
-
-    if (props.todolist.filter === 'active') {
-        tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.New)
-    }
-    if (props.todolist.filter === 'completed') {
-        tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
-    }
-
     return <div>
         <h3><EditableSpan value={props.todolist.title} onChange={changeTodolistTitleHandler}/>
             <IconButton onClick={removeTodolistHandler} disabled={props.todolist.entityStatus === 'loading'}>
@@ -48,11 +40,7 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
             </IconButton>
         </h3>
         <AddItemForm addItem={addTaskCallBack} disabled={props.todolist.entityStatus === 'loading'}/>
-        <div>
-            {
-                tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={props.todolist.id}/>)
-            }
-        </div>
+        <Tasks tasks={props.tasks} todolist={props.todolist}/>
         <div style={{paddingTop: '10px'}}>
             <FilterTasksButtons todolist={props.todolist}/>
         </div>
